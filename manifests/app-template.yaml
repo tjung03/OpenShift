@@ -1,0 +1,49 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: portfolio-web
+  annotations:
+    description: >-
+      애플리케이션 이름, 이미지, 복제본 수를 입력받아 Deployment 정의를 생성하는
+      OpenShift 학습용 Template
+    tags: openshift,template,deployment
+labels:
+  app.kubernetes.io/part-of: openshift-operations-lab
+objects:
+  # 문자열 파라미터와 숫자 필드는 OpenShift Template의 서로 다른 치환 형식을 사용합니다.
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: ${APP_NAME}
+      labels:
+        app.kubernetes.io/name: ${APP_NAME}
+        app.kubernetes.io/instance: ${APP_NAME}
+    spec:
+      replicas: ${{REPLICAS}}
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: ${APP_NAME}
+          app.kubernetes.io/instance: ${APP_NAME}
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: ${APP_NAME}
+            app.kubernetes.io/instance: ${APP_NAME}
+        spec:
+          containers:
+            - name: app
+              image: ${IMAGE}
+              imagePullPolicy: IfNotPresent
+
+parameters:
+  - name: APP_NAME
+    description: Kubernetes DNS label 형식의 애플리케이션 이름
+    value: portfolio-web
+    required: true
+  - name: IMAGE
+    description: 대상 OpenShift 클러스터에서 접근할 수 있는 컨테이너 이미지 참조
+    required: true
+  - name: REPLICAS
+    description: Deployment 복제본 수
+    value: "2"
+    required: true

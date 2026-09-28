@@ -1,0 +1,23 @@
+# 로컬 인증 정보와 클러스터 접속 설정은 저장소에 포함하지 않습니다.
+.kube/
+kubeconfig*
+*.kubeconfig
+*.token
+*.key
+*.pem
+*.p12
+*.pfx
+.env
+.env.*
+!.env.example
+auth.json
+pull-secret*.json
+
+# 상태 점검 결과에는 클러스터 이름, 노드 주소 등이 포함될 수 있습니다.
+reports/
+
+# 편집기와 운영체제가 생성하는 파일
+.idea/
+.vscode/
+.DS_Store
+*~
