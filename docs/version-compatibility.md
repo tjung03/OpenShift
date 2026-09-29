@@ -32,17 +32,16 @@ oc process -f manifests/app-template.yaml -p IMAGE=<image-reference> \
   | oc apply --dry-run=server -f -
 ```
 
-## 명령과 표현 교정
+## 운영 명령을 적용할 때
 
-| 원문 표현 | 반영 내용 | 이유 |
-| --- | --- | --- |
-| `kubectl config set-contexts` | `kubectl config set-context` | 실제 하위 명령 이름 교정 |
-| `opensift-monitoring` | `openshift-monitoring` | Namespace 오탈자 교정 |
-| `skopeo lgoin` | `skopeo login` | 명령 오탈자 교정 |
-| `spect` | `spec` | Manifest 필드 오탈자 교정 |
-| 명령에 평문 DB 비밀번호 작성 | 예제에서 제거, Secret/외부 주입 원칙 명시 | Shell history·프로세스 목록·Git 노출 방지 |
-| Pod 강제 삭제를 일반 명령처럼 나열 | 위험과 사용 조건을 Runbook에 명시 | 정상 종료 우회에 따른 데이터 손실 방지 |
-| `oc get operators` 단독 확인 | ClusterOperator와 OLM 리소스를 분리 조회 | 플랫폼 상태와 Add-on 설치 상태의 의미 구분 |
+DO180 자료와 실제 클러스터의 동작을 대조할 때는 명령이 조회하는 API와 필요한 권한을 구분합니다.
+
+| 확인 대상 | 이 저장소의 적용 기준 |
+| --- | --- |
+| 프로젝트 생성 | `oc new-project`는 ProjectRequest API를 사용한다. 자체 생성 권한은 `oc auth can-i create projectrequests.project.openshift.io`로 확인 |
+| Operator 상태 | `oc get operators`만으로 플랫폼 상태를 판단하지 않고 ClusterOperator와 OLM Subscription·CSV를 나누어 확인 |
+| Pod 진단 | 강제 삭제를 일반 복구 절차로 사용하지 않고 종료 실패 원인을 먼저 확인 |
+| 인증 정보 | 토큰·비밀번호와 클러스터 출력 전체를 예제나 공개 저장소에 기록하지 않음 |
 
 ## 이미지 버전 정책
 
@@ -58,5 +57,6 @@ oc process -f manifests/app-template.yaml -p IMAGE=<image-reference> \
 - [OpenShift Container Platform 문서](https://docs.redhat.com/en/documentation/openshift_container_platform/)
 - [OpenShift 4.18 CLI 도구](https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/cli_tools/openshift-cli-oc)
 - [OpenShift 4.22 CLI 도구](https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc)
+- [OpenShift 4.18 프로젝트 생성과 자체 프로비저닝](https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/building_applications/projects)
 - [Template API 4.22](https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/template_apis/template-template-openshift-io-v1)
 - [OpenShift Container Platform Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift)

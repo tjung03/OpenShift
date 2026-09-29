@@ -29,13 +29,13 @@ OpenShift Project는 Kubernetes Namespace를 확장한 리소스입니다. 새 �
 ```bash
 oc project
 oc get project
-oc auth can-i create projects.project.openshift.io
+oc auth can-i create projectrequests.project.openshift.io
 
 oc new-project <project-name>
 oc project <project-name>
 ```
 
-기존 프로젝트를 선택하기만 할 때는 `oc project <project-name>`을 사용합니다. Kubernetes Context의 Namespace를 직접 바꿔야 한다면 명령은 `kubectl config set-context --current --namespace=<namespace>`이며, `set-contexts`가 아닙니다.
+`oc new-project`는 ProjectRequest API를 통해 새 프로젝트를 요청하므로, 위 권한 조회가 `no`라면 관리자에게 요청하거나 승인된 기존 프로젝트를 선택합니다. 기존 프로젝트를 선택하기만 할 때는 `oc project <project-name>`을 사용합니다. Kubernetes Context의 Namespace를 직접 바꿔야 한다면 `kubectl config set-context --current --namespace=<namespace>`를 사용합니다.
 
 ## 3. Operator 상태 구분
 

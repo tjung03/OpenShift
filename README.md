@@ -25,7 +25,7 @@ Red Hat OpenShift Container Platform에서 프로젝트를 선택하고 클러�
 | 상태 점검 자동화 | 현재 Context, ClusterOperator, 노드, Pod, 이벤트, Metrics를 읽기 전용으로 수집 | [`scripts/cluster-health-check.sh`](scripts/cluster-health-check.sh) |
 | 운영 Runbook | 로그인부터 Pod·노드·CRI-O 진단까지 권한과 위험도를 구분한 점검 순서 | [`docs/operations-runbook.md`](docs/operations-runbook.md) |
 | Template 예제 | 애플리케이션 이름·이미지·복제본 수를 파라미터로 받아 Deployment 정의 생성 | [`manifests/app-template.yaml`](manifests/app-template.yaml) |
-| 버전 판단 기준 | 4.18 학습 내용과 현재 문서의 관계, 원문 오탈자·위험 예제 교정 내역 | [`docs/version-compatibility.md`](docs/version-compatibility.md) |
+| 버전 판단 기준 | 4.18 학습 내용과 4.22 공식 문서의 대응, 실행 전 확인할 API·명령 | [`docs/version-compatibility.md`](docs/version-compatibility.md) |
 
 ## 저장소 구조
 
@@ -72,9 +72,10 @@ oc process -f manifests/app-template.yaml \
   | oc apply --dry-run=server -f -
 ```
 
-서버 측 검증 결과가 정상일 때만 실제 리소스를 생성합니다.
+서버 측 검증 결과가 정상일 때만 실제 리소스를 생성합니다. `oc new-project`는 ProjectRequest 생성 권한이 허용된 환경에서만 실행합니다. 자체 프로젝트 생성이 제한되어 있다면 관리자가 승인한 기존 프로젝트를 `oc project <project-name>`으로 선택합니다.
 
 ```bash
+oc auth can-i create projectrequests.project.openshift.io
 oc new-project portfolio-openshift
 
 oc process -f manifests/app-template.yaml \
