@@ -1,8 +1,8 @@
 # OpenShift 운영 점검과 Template 처리 실습
 
-Red Hat OpenShift Container Platform에서 프로젝트를 선택하고 클러스터 상태를 관찰한 뒤, Pod·노드 문제를 단계적으로 좁혀 가는 운영 학습 저장소입니다. 반복 가능한 점검 스크립트와 파라미터형 OpenShift Template 예제로 학습 범위를 재구성했습니다.
+Red Hat OpenShift Container Platform에서 프로젝트를 선택하고 클러스터 상태를 관찰한 뒤, Pod·노드 문제를 단계적으로 좁혀 가는 운영 학습 저장소입니다. 반복 가능한 점검 스크립트와 파라미터형 OpenShift Template 예제를 포함합니다.
 
-이 저장소는 **DO180 OpenShift Container Platform 4.18 학습 범위**를 기준으로 합니다. 실제 운영 경험이나 클러스터 적용 완료를 주장하지 않으며, 로컬 정적 검증과 클러스터 검증 절차를 구분합니다.
+예제의 CLI·API는 **OpenShift Container Platform 4.18** 범위를 기준으로 작성됐습니다. 실제 운영 경험이나 클러스터 적용 완료를 주장하지 않으며, 로컬 정적 검증과 클러스터 검증 절차를 구분합니다.
 
 ## 운영 점검 흐름
 
@@ -105,7 +105,7 @@ oc delete deployment -l app.kubernetes.io/instance=portfolio-web
 
 ## 버전과 현재 활용 방식
 
-- 기준 자료는 OpenShift Container Platform **4.18**이며, 4.14 자료는 차이 확인에만 사용했습니다.
+- 예제의 기준 API와 CLI는 OpenShift Container Platform **4.18**에 맞춰 설명합니다.
 - `oc debug`, `oc adm top`, `template.openshift.io/v1`은 **2026-09-28 검토 시점의 4.22 공식 문서**에서도 확인되는 방식입니다.
 - 실행 전 `oc version`, `oc api-resources`, `oc explain`으로 대상 클러스터가 제공하는 API와 필드를 확인합니다.
 - 학습용 부동 이미지 태그를 그대로 고정하지 않았습니다. 실제 환경에서는 검증한 image digest 또는 내부 ImageStream 정책을 사용합니다.
